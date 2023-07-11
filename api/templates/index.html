@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>License Manager</title>
+    <style>
+        .colored-label {
+            color: orangered;
+        }
+        h1 {
+            color: blue;
+        }
+    </style>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="radio"] {
+            margin-bottom: 5px;
+            font-size: 15px;
+            padding: 5px;
+        }
+
+        input[type="submit"] {
+            font-size: 20px;
+            display: block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin: 0 auto;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .add-button, .remove-button {
+            padding: 2px 5px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .add-button:hover, .remove-button:hover {
+            background-color: #218838;
+        }
+
+        .section-container {
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 20px;
+        }
+
+        .section-container h3 {
+            margin-top: 0;
+        }
+
+        .radio-button-container {
+            display: inline-block;
+        }
+
+        .button-container {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>License Manager</h1><br><br>
+    <form method="POST">
+        <div>
+            {% if label_text %}
+               <label class="colored-label" style="text-align: center">{{ label_text }}</label><br>
+            {% endif %}
+        </div><br><br>
+        <div class="section-container">
+            <h3>LU License:</h3>
+            <input type="text" name="lutext" placeholder="Enter LU S/N" value="{{ lu_text }}"><br><br>
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_SLA">
+                SLA
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_LRT">
+                LRT
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_VIDEO">
+                VIDEO
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_DATA-BRIDGE">
+                DATA-BRIDGE
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_IP-PIPE">
+                IP-PIPE
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_PRO4">
+                PRO4
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_BONDING">
+                BONDING
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_HDR">
+                HDR
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="LU_VIDEO-RETURN">
+                VIDEO-RETURN
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+        </div>
+        <div class="section-container">
+            <h3>MMH License:</h3>
+            <input type="text" name="mmhtext" placeholder="Enter MMH S/N" value="{{ mmh_text }}"><br><br>
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="MMH_SLA">
+                SLA
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="MMH_IP-PIPE">
+                IP-PIPE
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="MMH_4K">
+                4K
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="MMH_PRO2">
+                PRO2
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+
+            <div class="radio-button-container">
+                <input type="radio" name="radio" value="MMH_PRO4">
+                PRO4
+            </div>
+            <div class="button-container">
+                <button type="submit" name="action" value="add" class="add-button">ADD</button>
+                <button type="submit" name="action" value="remove" class="remove-button">REMOVE</button>
+            </div>
+            <br><br>
+        </div>
+    </form>
+    <br>
+</body>
+</html>

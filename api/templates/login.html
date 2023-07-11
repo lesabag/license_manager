@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: blue;
+            margin-top: 50px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>License Manager - Token Generation</h1>
+    <br><br>
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+    <form method="POST" action="/login">
+        <label for="username">LUC Username:</label>
+        <br>
+        <input type="text" id="username" name="username" placeholder="Enter your username">
+        <br><br>
+        <label for="password">LUC Password:</label>
+        <br>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+        <br><br><br><br>
+        <input type="submit" value="Generate Token">
+        <br>
+    </form>
+</body>
+</html>

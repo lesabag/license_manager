@@ -6,12 +6,16 @@ from flask import Flask, request, render_template, redirect, url_for
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
-get_token_url = 'https://luc-automation.liveu-rnd.com:8543/luc/luc-core-web/rest/login/j_oauth_token_grant'
-get_list_of_service_url = 'https://luc-automation.liveu-rnd.com:8543/luc/luc-core-web/rest/v2/admin/units/Boss100_lu300_393131343164346565366133353436/services'
-api_base_url = "https://luc-automation.liveu-rnd.com:8543/luc/luc-core-web/rest/billing/{}/{}/services/{}"
+AUTO_DOMAIN = 'luc-automation.liveu-rnd.com:8543'
+STG_DOMAIN = 'luc-staging.liveu.tv:443'
+
+get_token_url = 'https://{}/luc/luc-core-web/rest/login/j_oauth_token_grant'
+get_list_of_service_url = 'https://{}/luc/luc-core-web/rest/v2/admin/units' \
+                          '/Boss100_lu300_393131343164346565366133353436/services'
+api_base_url = "https://{}}/luc/luc-core-web/rest/billing/{}/{}/services/{}"
 
 global access_token, res
-global env_user, env_password, radio_name, lic_name
+global env_user, env_password, radio_name, lic_name, selected_env
 label_text = ""
 
 
@@ -26,6 +30,11 @@ def login():
     os.environ['LUC_USERNAME'] = UI_username
     UI_password = request.form.get('password')
     os.environ['LUC_USERNAME'] = UI_password
+
+    if 'AUTO' in request.form.get('listbox'):
+        setEnvironment(AUTO_DOMAIN)
+    else:
+        setEnvironment(STG_DOMAIN)
 
     setUserAndPassword(UI_username, UI_password)
 
@@ -96,17 +105,17 @@ def license_request_by_action(action, radio_selection, license_name, lu_text, mm
 
     if 'LU' in radio_selection:
         if action == 'add' and lu_text:
-            add_license_request(api_base_url.format("units", lu_text, license_name))
+            add_license_request(api_base_url.format(getEnvironment(), "units", lu_text, license_name))
         elif action == 'remove' and lu_text:
-            remove_license_request(api_base_url.format("units", lu_text, license_name))
+            remove_license_request(api_base_url.format(getEnvironment(), "units", lu_text, license_name))
         else:
             label_text = 'you need to provide LU S/N'
 
     if 'LU' not in radio_selection:
         if action == 'add' and mmh_text:
-            add_license_request(api_base_url.format("servers", lu_text, license_name))
+            add_license_request(api_base_url.format(getEnvironment(), "servers", lu_text, license_name))
         elif action == 'remove' and mmh_text:
-            remove_license_request(api_base_url.format("servers", lu_text, license_name))
+            remove_license_request(api_base_url.format(getEnvironment(), "servers", lu_text, license_name))
         else:
             label_text = 'you need to provide MMH S/N'
 
@@ -120,6 +129,14 @@ def set_acc_token(token):
     global res
     res = token
 
+
+def setEnvironment(env):
+    global selected_env
+    selected_env = env
+
+
+def getEnvironment():
+    return selected_env
 
 def setUserAndPassword(user, password):
     global env_user, env_password
@@ -147,8 +164,8 @@ def set_access_token(token):
 
 def getToken(username, password):
     global label_text, res
-
-    res = requests.post(get_token_url, auth=(username, password))
+    print(f'get_token_url.format(getEnvironment(): {get_token_url.format(getEnvironment())}')
+    res = requests.post(get_token_url.format(getEnvironment()), auth=(username, password))
 
     if res.status_code == 200:
         label_text = 'REGISTRATION ENDED SUCCESSFULLY'

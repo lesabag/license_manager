@@ -12,7 +12,7 @@ STG_DOMAIN = 'luc-staging.liveu.tv:443'
 get_token_url = 'https://{}/luc/luc-core-web/rest/login/j_oauth_token_grant'
 get_list_of_service_url = 'https://{}/luc/luc-core-web/rest/v2/admin/units' \
                           '/Boss100_lu300_393131343164346565366133353436/services'
-api_base_url = "https://{}}/luc/luc-core-web/rest/billing/{}/{}/services/{}"
+api_base_url = "https://{}/luc/luc-core-web/rest/billing/{}/{}/services/{}"
 
 global access_token, res
 global env_user, env_password, radio_name, lic_name, selected_env

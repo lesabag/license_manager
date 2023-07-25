@@ -97,6 +97,7 @@ def index():
 
 
 def license_request_by_action(action, radio_selection, license_name, lu_text, mmh_text):
+    global label_text
     def get_target_type():
         return "units" if 'LU' in radio_selection else "servers"
 

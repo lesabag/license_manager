@@ -99,25 +99,27 @@ def index():
 
 
 def license_request_by_action(action, radio_selection, license_name, lu_text, mmh_text):
-    global label_text
-    print(f' action: {action}, radio: {radio_selection}, license: {license_name},'
-          f' lutext: {lu_text}, mmh_text: {mmh_text}')
+    def get_target_type():
+        return "units" if 'LU' in radio_selection else "servers"
 
-    if 'LU' in radio_selection:
-        if action == 'add' and lu_text:
-            add_license_request(api_base_url.format(getEnvironment(), "units", lu_text, license_name))
-        elif action == 'remove' and lu_text:
-            remove_license_request(api_base_url.format(getEnvironment(), "units", lu_text, license_name))
-        else:
-            label_text = 'you need to provide LU S/N'
+    def validate_sn():
+        if 'LU' in radio_selection and not lu_text:
+            return False, 'you need to provide LU S/N'
+        if 'LU' not in radio_selection and not mmh_text:
+            return False, 'you need to provide MMH S/N'
+        return True, ''
 
-    if 'LU' not in radio_selection:
-        if action == 'add' and mmh_text:
-            add_license_request(api_base_url.format(getEnvironment(), "servers", lu_text, license_name))
-        elif action == 'remove' and mmh_text:
-            remove_license_request(api_base_url.format(getEnvironment(), "servers", lu_text, license_name))
-        else:
-            label_text = 'you need to provide MMH S/N'
+    target_type = get_target_type()
+    is_valid_sn, label_text = validate_sn()
+
+    if is_valid_sn:
+        if action == 'add':
+            add_license_request(api_base_url.format(getEnvironment(), target_type, lu_text, license_name))
+        elif action == 'remove':
+            remove_license_request(api_base_url.format(getEnvironment(), target_type, lu_text, license_name))
+
+    return label_text
+
 
 
 def setLabelText(licenseName):

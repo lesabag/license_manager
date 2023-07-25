@@ -103,9 +103,9 @@ def license_request_by_action(action, radio_selection, license_name, lu_text, mm
         return "units" if 'LU' in radio_selection else "servers"
 
     def validate_sn():
-        if 'LU' in radio_selection and not lu_text:
+        if radio_selection.startswith('LU') and not lu_text:
             return False, 'you need to provide LU S/N'
-        if 'LU' not in radio_selection and not mmh_text:
+        if not radio_selection.startswith('LU') and not mmh_text:
             return False, 'you need to provide MMH S/N'
         return True, ''
 
